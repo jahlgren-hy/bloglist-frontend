@@ -15,57 +15,76 @@ const App = () => {
     )
   }, [])
 
-
   const handleLogin = async (event) => {
     event.preventDefault()
 
     try {
       const user = await loginService.login
         ({ username, password, })
+
+      window.localStorage.setItem(
+        'loggedAppUser', JSON.stringify(user)
+      )
+      blogService.setToken(user.token)
+
       setUser(user)
       setUsername('')
       setPassword('')
-      console.log(user)
     } catch (exception) {
       console.log('wrong credentials!')
     }
   }
 
-  if (user === null) {
-    return (
-      <div>
-        <h2>Log in to application</h2>
-        <form onSubmit={handleLogin}>
-          <div>
-            Käyttäjätunnus
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            Salasana
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">kirjaudu</button>
-        </form>
-      </div>
-    )
+  const handleLogout = async (event) => {
+    window.localStorage.removeItem('loggedAppUser')
+    setUser(null)
   }
-  return (
+
+  const blogView = () => (
     <div>
-      <h2>Blogs</h2>
-      <p>{user.name} logged in</p>
+      <p>{user.name} logged in
+      <button onClick={handleLogout}>logout</button>
+      </p>
+      <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+    </div>
+  )
+
+  const loginForm = () => (
+    <div>
+
+      <h2> log in to application</h2>
+      <form onSubmit={handleLogin}>
+        <div>
+          Käyttäjätunnus
+            <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
+          Salasana
+            <input
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">kirjaudu</button>
+      </form>
+    </div>
+  )
+
+  return (
+    <div>
+      <h1>Blogs</h1>
+      {user === null && loginForm()}
+      {user !== null && blogView()}
     </div>
   )
 }
