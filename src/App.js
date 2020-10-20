@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import './App.css'
 
 const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [blogs, setBlogs] = useState([])
+  const [message, setMessage] = useState({ message: null })
   const [title, setTitle] = useState([])
   const [author, setAuthor] = useState([])
   const [url, setUrl] = useState([])
@@ -32,6 +35,11 @@ const App = () => {
     }
   }, [])
 
+  const notify = (message, type = 'info') => {
+    setMessage({ message, type })
+    setTimeout(() => setMessage({ message: null }), 5000)
+  }
+
   const addBlog = async (event) => {
     event.preventDefault()
 
@@ -45,7 +53,7 @@ const App = () => {
       const newBlog = await blogService
         .create(blog)
       setBlogs(blogs.concat(newBlog))
-      console.log(`Lisätty uusi blogi ${newBlog.author}'n ${newBlog.title}`)
+      notify(`Lisätty uusi blogi ${newBlog.author}'n ${newBlog.title} `)
       setAuthor('')
       setTitle('')
       setUrl('')
@@ -69,8 +77,9 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-    } catch (exception) {
-      console.log('wrong credentials!')
+    } catch (error) {
+      notify('wrong credentials!', 'error')
+      console.log(error)
     }
   }
 
@@ -162,7 +171,8 @@ const App = () => {
 
   return (
     <div>
-      <h1>Blogs</h1>
+      <h1> Blogs</h1>
+      <Notification message={message} />
       {user === null && loginForm()}
       {user !== null && blogForm()}
     </div>
