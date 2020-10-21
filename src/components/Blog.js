@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import blogService from '../services/blogs'
 
 const Blog = ({ blog }) => {
   const [showAll, setShowAll] = useState(false)
@@ -17,6 +18,17 @@ const Blog = ({ blog }) => {
     setShowAll(!showAll)
   }
 
+  const handleLikes = async (event) => {
+    event.preventDefault()
+    const likedBlog = { ...blog, likes: blog.likes += 1 }
+    try {
+      blogService.like(likedBlog.id, likedBlog)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   const viewBlog = () => (
     <div>
       <a href={blog.url} rel="noopener noreferrer" target="_blank">
@@ -24,7 +36,7 @@ const Blog = ({ blog }) => {
       </a>
       <p>
         {blog.likes} likes
-        <button type="button">
+        <button type="button" onClick={handleLikes}>
           like
         </button>
       </p>
