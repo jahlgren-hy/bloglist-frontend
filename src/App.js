@@ -121,7 +121,7 @@ const App = () => {
   )
 
   return (
-    <div>
+    <div className="App">
       <h1> Blogs</h1>
       <Notification message={message} />
       {user === null && loginForm()}
