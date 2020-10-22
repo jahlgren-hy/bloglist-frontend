@@ -28,6 +28,16 @@ const Blog = ({ blog }) => {
     }
   }
 
+  const handleRemove = async (event) => {
+    event.preventDefault()
+    try {
+      if (window.confirm(`remove blog ${blog.title}`)) {
+        blogService.remove(blog.id)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const viewBlog = () => (
     <div>
@@ -43,6 +53,12 @@ const Blog = ({ blog }) => {
       <p className="font-weight-bold">
         {blog.user.name}
       </p>
+      {user && JSON.parse(user).name === blog.user.name ?
+        <button type="button" onClick={handleRemove}>
+          remove
+            </button> :
+        <p></p>
+      }
     </div>
   )
 
