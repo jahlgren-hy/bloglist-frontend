@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './forms/BlogForm'
+import LoginForm from './forms/LoginForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -39,7 +40,10 @@ const App = () => {
     setTimeout(() => setMessage({ message: null }), 5000)
   }
 
+  const blogFormRef = useRef()
+
   const addBlog = async (blog) => {
+    blogFormRef.current.toggleVisibility()
     try {
       const newBlog = await blogService
         .create(blog)
@@ -76,14 +80,13 @@ const App = () => {
     setUser(null)
   }
 
-
   const blogView = () => (
     <div>
       <h2>blogs</h2>
       <p>{user.name} logged in
       <button onClick={handleLogout}>logout</button>
       </p>
-      <Togglable buttonLabel="New blog">
+      <Togglable buttonLabel="New blog" ref={blogFormRef}>
         <BlogForm onSubmit={addBlog} />
       </Togglable>
       {blogs
@@ -95,31 +98,13 @@ const App = () => {
   )
 
   const loginForm = () => (
-    <div>
-
-      <h2> log in to application</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          Käyttäjätunnus
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          Salasana
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">kirjaudu</button>
-      </form>
-    </div>
+    <LoginForm
+      username={username}
+      password={password}
+      handleUsernameChange={({ target }) => setUsername(target.value)}
+      handlePasswordChange={({ target }) => setPassword(target.value)}
+      handleSubmit={handleLogin}
+    />
   )
 
   return (

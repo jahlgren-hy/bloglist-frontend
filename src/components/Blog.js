@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import blogService from '../services/blogs'
 
 const Blog = ({ blog }) => {
@@ -73,6 +74,10 @@ const Blog = ({ blog }) => {
       {showAll && viewBlog()}
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
 }
 
 export default Blog
