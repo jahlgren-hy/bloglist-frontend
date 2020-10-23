@@ -41,7 +41,7 @@ const BlogForm = (props) => {
 
       <div>
         Author
-          <input
+        <input
           type="text"
           value={author}
           name="Author"
@@ -51,7 +51,7 @@ const BlogForm = (props) => {
 
       <div>
         Url
-          <input
+        <input
           type="text"
           value={url}
           name="Url"

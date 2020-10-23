@@ -58,8 +58,8 @@ const App = () => {
     event.preventDefault()
 
     try {
-      const user = await loginService.login
-        ({ username, password, })
+      const user = await loginService
+        .login({ username, password, })
 
       window.localStorage.setItem(
         'loggedAppUser', JSON.stringify(user)
@@ -75,7 +75,7 @@ const App = () => {
     }
   }
 
-  const handleLogout = async (event) => {
+  const handleLogout = async () => {
     window.localStorage.removeItem('loggedAppUser')
     setUser(null)
   }
@@ -84,7 +84,7 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <p>{user.name} logged in
-      <button onClick={handleLogout}>logout</button>
+        <button onClick={handleLogout}>logout</button>
       </p>
       <Togglable buttonLabel="New blog" ref={blogFormRef}>
         <BlogForm onSubmit={addBlog} />

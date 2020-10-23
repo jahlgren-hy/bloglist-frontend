@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import blogService from '../services/blogs'
 
 const Blog = ({ blog }) => {
+
   const [showAll, setShowAll] = useState(false)
   const [value, setValue] = useState('view')
 
@@ -57,7 +58,7 @@ const Blog = ({ blog }) => {
       {user && JSON.parse(user).name === blog.user.name ?
         <button type="button" onClick={handleRemove}>
           remove
-            </button> :
+        </button> :
         <p></p>
       }
     </div>
@@ -76,8 +77,9 @@ const Blog = ({ blog }) => {
   )
 }
 
+
 Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
+  blog: PropTypes.object,
 }
 
 export default Blog
