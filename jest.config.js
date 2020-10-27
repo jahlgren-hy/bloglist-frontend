@@ -1,1 +1,1 @@
-export const setupFilesAfterEnv = ['./setupTests.js']
+export const setupFilesAfterEnv = ['./src/setupTests.js']

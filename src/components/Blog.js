@@ -46,9 +46,9 @@ const Blog = ({ blog }) => {
       <a href={blog.url} rel="noopener noreferrer" target="_blank">
         {blog.url}
       </a>
-      <p>
+      <p className="blog-likes">
         {blog.likes} likes
-        <button type="button" onClick={handleLikes}>
+        <button className="blog-likes-button" type="button" onClick={handleLikes}>
           like
         </button>
       </p>

@@ -64,20 +64,19 @@ test('clicking like-button twice', async () => {
       onClick={mockHandler}
     />)
 
-  const button = component.getByText(/view/i)
+  let button = component.getByText(/view/i)
+  // console.log(prettyDOM(component.container))
+  // console.log(prettyDOM(button))
+
   fireEvent.click(button)
 
-  expect(mockHandler.mock.calls.length).toBe(0)
+  const onclick = jest.fn()
+  button = component.container.querySelector('.blog-likes-button')
+  // console.log(prettyDOM(button))
+  // console.log(button)
+  expect(button).toBeDefined()
 
-  console.log(prettyDOM(component.container))
-
-  /*
-    expect(mockHandler.mock.calls).toHaveLength(1)
-    fireEvent.click(button)
-    expect(mockHandler.mock.calls).toHaveLength(1)
-
-    const likeButton = component.getByText('like')
-    expect(likeButton).toBeDefined()
-    fireEvent.click(likeButton)
-  */
+  fireEvent.click(button)
+  fireEvent.click(button)
+  expect(onclick.mock.calls).toHaveLength(0)
 })
