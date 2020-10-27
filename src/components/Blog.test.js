@@ -1,6 +1,6 @@
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
 import { render, fireEvent } from '@testing-library/react'
+import { prettyDOM } from '@testing-library/dom'
 import Blog from './Blog'
 
 const blog = {
@@ -53,4 +53,31 @@ test('clicking the button renders url and likes', async () => {
   expect(component.container).toHaveTextContent(
     'likes'
   )
+})
+
+test('clicking like-button twice', async () => {
+  const mockHandler = jest.fn()
+
+  const component = render(
+    <Blog
+      blog={blog}
+      onClick={mockHandler}
+    />)
+
+  const button = component.getByText(/view/i)
+  fireEvent.click(button)
+
+  expect(mockHandler.mock.calls.length).toBe(0)
+
+  console.log(prettyDOM(component.container))
+
+  /*
+    expect(mockHandler.mock.calls).toHaveLength(1)
+    fireEvent.click(button)
+    expect(mockHandler.mock.calls).toHaveLength(1)
+
+    const likeButton = component.getByText('like')
+    expect(likeButton).toBeDefined()
+    fireEvent.click(likeButton)
+  */
 })
