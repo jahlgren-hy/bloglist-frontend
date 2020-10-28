@@ -46,9 +46,9 @@ const Blog = ({ blog }) => {
       <a href={blog.url} rel="noopener noreferrer" target="_blank">
         {blog.url}
       </a>
-      <p className="blog-likes">
+      <p className="app-blog-likes">
         {blog.likes} likes
-        <button className="blog-likes-button" type="button" onClick={handleLikes}>
+        <button className="app-blog-likes-button" type="button" onClick={handleLikes}>
           like
         </button>
       </p>
@@ -68,6 +68,7 @@ const Blog = ({ blog }) => {
     <div className="blog">
       {blog.title} {blog.author}
       <button
+        className="app-blog-button"
         type="button"
         onClick={handleClick}
       >{value}

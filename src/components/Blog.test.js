@@ -56,27 +56,23 @@ test('clicking the button renders url and likes', async () => {
 })
 
 test('clicking like-button twice', async () => {
-  const mockHandler = jest.fn()
+  const onclick = jest.fn()
 
   const component = render(
     <Blog
       blog={blog}
-      onClick={mockHandler}
+      onClick={onclick}
     />)
 
-  let button = component.getByText(/view/i)
-  // console.log(prettyDOM(component.container))
-  // console.log(prettyDOM(button))
+  let button = component.container.querySelector('.app-blog-button')
+  console.log(prettyDOM(button))
 
   fireEvent.click(button)
+  console.log(prettyDOM(component.container))
 
-  const onclick = jest.fn()
-  button = component.container.querySelector('.blog-likes-button')
-  // console.log(prettyDOM(button))
-  // console.log(button)
-  expect(button).toBeDefined()
-
-  fireEvent.click(button)
+  //button = component.getByText('like')
+  button = component.container.querySelector('.app-blog-likes-button')
+  console.log(prettyDOM(button))
   fireEvent.click(button)
   expect(onclick.mock.calls).toHaveLength(0)
 })
