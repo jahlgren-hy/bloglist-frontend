@@ -71,6 +71,9 @@ const App = () => {
       setPassword('')
     } catch (error) {
       notify('wrong credentials!', 'error')
+      setUser(user)
+      setUsername('')
+      setPassword('')
       console.log(error)
     }
   }
